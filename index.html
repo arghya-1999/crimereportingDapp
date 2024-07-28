@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting DApp</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Auth0 -->
+    <script src="https://cdn.auth0.com/js/auth0/9.13.2/auth0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 class="app-heading text-center my-4">Crime Reporting DApp</h1>
+        <div class="dashboard">
+            <div class="card my-4 shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-info" onclick="viewReports()">View Reports</button>
+                    <button class="btn btn-info" onclick="viewComplaints()">View Complaints</button>
+                </div>
+            </div>
+            <div id="contentArea"></div>
+        </div>
+        <div class="card my-4 shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h2>Report a Crime</h2>
+            </div>
+            <div class="card-body">
+                <form id="reportForm">
+                    <div class="form-group">
+                        <label for="crimeCategory">Crime Category</label>
+                        <select class="form-control" id="crimeCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="theft">Theft</option>
+                            <option value="assault">Assault</option>
+                            <option value="fraud">Fraud</option>
+                            <option value="vandalism">Vandalism</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Crime Description</label>
+                        <textarea class="form-control" id="description" rows="3" placeholder="Describe the crime" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="anonymous">
+                        <label for="anonymous">Report Anonymously</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Report <i class="fas fa-file-alt"></i></button>
+                </form>
+            </div>
+        </div>
+        <ul id="reportsList" class="list-group mb-4 shadow-lg"></ul>
+        
+        <div class="card my-4 shadow-lg">
+            <div class="card-header bg-success text-white">
+                <h2>Register a Complaint</h2>
+            </div>
+            <div class="card-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="reportId">Report ID</label>
+                        <input type="number" class="form-control" id="reportId" placeholder="Report ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerDescription">Complaint Description</label>
+                        <textarea class="form-control" id="registerDescription" rows="3" placeholder="Describe the complaint" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="reporterAddress">Reporter Address</label>
+                        <input type="text" class="form-control" id="reporterAddress" placeholder="Reporter Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Complaint Status</label>
+                        <select class="form-control" id="status" required>
+                            <option value="">Select Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="in_progress">In Progress</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success btn-block">Register <i class="fas fa-clipboard-check"></i></button>
+                </form>
+            </div>
+        </div>
+        <ul id="registrationsList" class="list-group shadow-lg"></ul>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Custom JS -->
+    <script src="complainant.js"></script>
+    <script src="police.js"></script>
+    <!-- Auth0 Authentication -->
+    <script>
+        // Initialize Auth0
+        const auth0 = new auth0.WebAuth({
+            domain: 'YOUR_AUTH0_DOMAIN',
+            clientID: 'YOUR_AUTH0_CLIENT_ID',
+            redirectUri: 'YOUR_CALLBACK_URL',
+            responseType: 'token id_token',
+            scope: 'openid profile email'
+        });
+
+        // Handle authentication
+        const login = () => auth0.authorize();
+        const handleAuthentication = () => {
+            auth0.parseHash((err, authResult) => {
+                if (authResult && authResult.accessToken && authResult.idToken) {
+                    window.location.hash = '';
+                    setSession(authResult);
+                } else if (err) {
+                    console.log(err);
+                }
+            });
+        };
+
+        const setSession = (authResult) => {
+            const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
+            localStorage.setItem('access_token', authResult.accessToken);
+            localStorage.setItem('id_token', authResult.idToken);
+            localStorage.setItem('expires_at', expiresAt);
+        };
+
+        handleAuthentication();
+
+        const viewReports = () => {
+            document.getElementById('contentArea').innerHTML = document.querySelector('.card.my-4.shadow-lg').outerHTML;
+            // Add logic to display reports
+        };
+
+        const viewComplaints = () => {
+            document.getElementById('contentArea').innerHTML = document.querySelectorAll('.card.my-4.shadow-lg')[1].outerHTML;
+            // Add logic to display complaints
+        };
+    </script>
+</body>
+</html>

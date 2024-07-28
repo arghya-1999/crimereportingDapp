@@ -1,0 +1,108 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #f8f9fa, #e0eafc);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.app-heading {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #ff5733;
+    text-transform: uppercase;
+    text-shadow: 2px 2px 5px rgba(255, 87, 51, 0.3);
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding: 15px;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-weight: 500;
+}
+
+.card-body {
+    padding: 25px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.form-group label {
+    font-weight: 500;
+}
+
+textarea, input, select {
+    border-radius: 10px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.btn-primary, .btn-success {
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-success:hover {
+    background-color: #28a745;
+    transform: scale(1.05);
+}
+
+.btn-primary i, .btn-success i {
+    margin-left: 10px;
+}
+
+.list-group-item {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-lg {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.my-4 {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.text-center {
+    text-align: center !important;
+}
